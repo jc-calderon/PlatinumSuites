@@ -1,0 +1,58 @@
+# Valida el contenido en cada push a `main` y, SOLO si el repositorio es público
+# (PlatinumSuites), publica el sitio en GitHub Pages.
+# En el repositorio privado (PlatinumSuites-dev) solo se ejecuta la validación.
+# Requisito en el repositorio público (una sola vez): Settings → Pages → Source: "GitHub Actions".
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run check
+
+      # Rutas para https://<usuario>.github.io/<repo>/ (BASE_PATH = /<repo>).
+      # Con dominio propio, cambie SITE por el dominio y BASE_PATH por "/".
+      - run: npm run build
+        env:
+          SITE: https://${{ github.repository_owner }}.github.io
+          BASE_PATH: /${{ github.event.repository.name }}
+
+      - if: ${{ !github.event.repository.private }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    # Solo en el repositorio público; en el privado el job se omite.
+    if: ${{ !github.event.repository.private }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
