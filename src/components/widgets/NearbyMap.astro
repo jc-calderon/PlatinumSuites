@@ -1,0 +1,41 @@
+---
+/**
+ * Mapa de Google My Maps (mantenido por el propietario) + tarjetas traducidas de los lugares cercanos.
+ * La URL del mapa está en src/content/settings/site.yaml (map.embed / map.viewer).
+ */
+import Icon from '../Icon.astro';
+import PlaceCards from './PlaceCards.astro';
+import type { Locale, Translator } from '../../i18n';
+import type { Place } from '../../lib/content';
+
+interface Props {
+  embed: string;
+  viewer: string;
+  places: Place[];
+  lang: Locale;
+  t: Translator;
+}
+
+const { embed, viewer, places, lang, t } = Astro.props;
+// Fuerza el idioma de la interfaz del mapa (los nombres de los pines no se traducen).
+const src = `${embed}${embed.includes('?') ? '&' : '?'}hl=${lang}`;
+---
+
+<div class="map-block">
+  <div class="map-frame">
+    <iframe
+      src={src}
+      title={t('places.mapTitle')}
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen></iframe>
+  </div>
+  <div class="map-actions">
+    <a class="btn btn-ghost btn-sm" href={viewer} target="_blank" rel="noopener noreferrer">
+      <Icon name="maximize" size={16} />
+      {t('action.fullscreenMap')}
+    </a>
+    <p class="map-hint">{t('places.mapFallback')}</p>
+  </div>
+  <PlaceCards places={places} lang={lang} t={t} variant="compact" />
+</div>

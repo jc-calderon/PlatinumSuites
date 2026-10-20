@@ -1,0 +1,188 @@
+---
+/**
+ * Plantilla ÚNICA de guía para cualquier suite e idioma.
+ * El contenido viene de src/content/guides/<idioma>/common.md + <suite>.md.
+ */
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from './SiteHeader.astro';
+import SiteFooter from './SiteFooter.astro';
+import ResponsiveImage from './ResponsiveImage.astro';
+import Placeholder from './Placeholder.astro';
+import SuiteFacts from './SuiteFacts.astro';
+import Icon from './Icon.astro';
+import GuideBody from './GuideBody.astro';
+import WifiCard from './widgets/WifiCard.astro';
+import Gallery from './widgets/Gallery.astro';
+import NearbyMap from './widgets/NearbyMap.astro';
+import PlaceCards from './widgets/PlaceCards.astro';
+import ContactCard from './widgets/ContactCard.astro';
+import EmergencyList from './widgets/EmergencyList.astro';
+import { defaultLocale, localeList, locales, type Locale, type SuiteId } from '../i18n/config';
+import { pick, useTranslations } from '../i18n';
+import { firstImage } from '../lib/images';
+import { getCommonGuide, getPlaces, getSettings, getSuiteGuide } from '../lib/content';
+import { guidePath } from '../lib/routes';
+
+interface Props {
+  lang: Locale;
+  suite: SuiteId;
+}
+
+const { lang, suite } = Astro.props;
+const t = useTranslations(lang);
+
+const [common, suiteGuide, settings, nearby, eat, city, trip] = await Promise.all([
+  getCommonGuide(lang),
+  getSuiteGuide(lang, suite),
+  getSettings(),
+  getPlaces('nearby'),
+  getPlaces('eat'),
+  getPlaces('city'),
+  getPlaces('trip'),
+]);
+
+const s = suiteGuide.entry.data;
+const { Content: CommonContent } = await render(common.entry);
+const { Content: SuiteContent } = await render(suiteGuide.entry);
+
+const cover = s.cover ? { src: s.cover, label: s.coverAlt ?? s.name } : firstImage(`${suite}/portada`);
+const alternates = Object.fromEntries(localeList.map((code) => [code, guidePath(code, suite)]));
+const checkin = pick(settings.stay.checkin, lang);
+const checkout = pick(settings.stay.checkout, lang);
+
+/** Valores disponibles como {{token}} en el Markdown (ver README). */
+const values = {
+  name: s.name,
+  tagline: s.tagline,
+  floor: s.floor,
+  capacity: s.capacity,
+  capacityNote: s.capacityNote ?? '',
+  size: s.size ?? '',
+  'parking.spot': s.parking.spot,
+  'parking.position': s.parking.position,
+  checkin,
+  checkout,
+  'wifi.ssid': settings.wifi.ssid,
+  building: settings.building.name,
+  hosts: settings.hosts.names,
+};
+
+const isFallback = common.isFallback || suiteGuide.isFallback;
+const isUnreviewed = [common.entry.data.translation, s.translation].includes('unreviewed');
+const whatsapp = `https://wa.me/${settings.hosts.phone.replace(/\D/g, '')}?text=${encodeURIComponent(
+  t('contact.whatsappText', { suite: s.name }),
+)}`;
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('guide.metaTitle', { suite: s.name })}
+  description={s.description}
+  alternates={alternates}
+  bodyClass="page-guide"
+>
+  <SiteHeader lang={lang} alternates={alternates} showBack />
+
+  <main id="main">
+    <section class="guide-hero">
+      <div class="guide-hero-media">
+        {
+          cover ? (
+            <ResponsiveImage src={cover.src} alt={cover.label} sizes="(min-width: 1100px) 1100px, 100vw" class="guide-hero-img" priority />
+          ) : (
+            <Placeholder title={s.name} caption={t('suite.photosSoon')} class="guide-hero-placeholder" />
+          )
+        }
+      </div>
+      <div class="guide-hero-card">
+        <p class="eyebrow">{t('brand.name')} · {common.entry.data.title}</p>
+        <h1 class="guide-title">{s.name}</h1>
+        <p class="guide-tagline">{s.tagline}</p>
+        <SuiteFacts
+          items={[
+            { icon: 'clock', label: t('suite.checkin'), value: checkin },
+            { icon: 'log-out', label: t('suite.checkout'), value: checkout },
+            { icon: 'building', label: t('suite.floor'), value: String(s.floor) },
+            { icon: 'users', label: t('suite.guests'), value: t('suite.upTo', { n: s.capacity }) },
+            { icon: 'car', label: t('suite.parking'), value: t('suite.parkingSpot', { n: s.parking.spot }) },
+          ]}
+        />
+        <div class="quick-actions">
+          <a class="btn btn-primary" href="#wifi">
+            <Icon name="wifi" size={18} />
+            {t('nav.wifi')}
+          </a>
+          <a class="btn btn-whatsapp" href={whatsapp} target="_blank" rel="noopener noreferrer">
+            <Icon name="message" size={18} />
+            {t('action.whatsapp')}
+          </a>
+          <a class="btn btn-ghost" href={settings.building.maps} target="_blank" rel="noopener noreferrer">
+            <Icon name="map-pin" size={18} />
+            {t('action.directions')}
+          </a>
+        </div>
+        {
+          isFallback ? (
+            <p class="notice">
+              <Icon name="info" size={16} />
+              {t('notice.fallback', { lang: locales[lang].label, fallback: locales[defaultLocale].label })}
+            </p>
+          ) : (
+            isUnreviewed && (
+              <p class="notice notice-subtle">
+                <Icon name="info" size={16} />
+                {t('notice.unreviewed')}
+              </p>
+            )
+          )
+        }
+      </div>
+    </section>
+
+    <GuideBody
+      values={values}
+      t={t}
+      source={`src/content/guides/${common.entry.id}.md`}
+      contentLang={common.isFallback ? locales[defaultLocale].htmlLang : undefined}
+      suiteLang={suiteGuide.isFallback ? locales[defaultLocale].htmlLang : undefined}
+    >
+      <CommonContent />
+      <div slot="suite" lang={suiteGuide.isFallback ? locales[defaultLocale].htmlLang : undefined}>
+        <SuiteContent />
+      </div>
+      <Gallery
+        slot="gallery"
+        folder={`${suite}/galeria`}
+        title={`${t('guide.gallery')} · ${s.name}`}
+        emptyTitle={s.name}
+        note={suite === 'concordia' ? t('guide.provisionalPhotos') : undefined}
+        t={t}
+      />
+      <Gallery slot="gallery-pool" folder="common/piscina" title={t('guide.gallery')} t={t} />
+      <WifiCard slot="wifi" ssid={settings.wifi.ssid} password={settings.wifi.password} t={t} />
+      <NearbyMap slot="map" embed={settings.map.embed} viewer={settings.map.viewer} places={nearby} lang={lang} t={t} />
+      <PlaceCards slot="places-eat" places={eat} lang={lang} t={t} variant="grid" />
+      <Fragment slot="places-visit">
+        <p class="place-group-title">{t('places.city')}</p>
+        <PlaceCards places={city} lang={lang} t={t} variant="grid" />
+        <p class="place-group-title">{t('places.trip')}</p>
+        <PlaceCards places={trip} lang={lang} t={t} variant="grid" />
+      </Fragment>
+      <ContactCard
+        slot="contacts"
+        names={settings.hosts.names}
+        phone={settings.hosts.phone}
+        display={settings.hosts.display}
+        suiteName={s.name}
+        t={t}
+      />
+      <EmergencyList slot="emergency" items={settings.emergency} lang={lang} />
+      <a slot="directions" class="inline-link" href={settings.building.maps} target="_blank" rel="noopener noreferrer"
+        >{t('action.directions')} ↗</a
+      >
+    </GuideBody>
+  </main>
+
+  <SiteFooter lang={lang} building={`${settings.building.name} · ${settings.building.area}`} />
+</BaseLayout>

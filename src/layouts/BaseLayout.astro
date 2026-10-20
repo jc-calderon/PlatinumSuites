@@ -1,0 +1,53 @@
+---
+import '@fontsource-variable/jost';
+import '@fontsource-variable/cormorant-garamond';
+import '../styles/global.css';
+import { locales, type Locale } from '../i18n/config';
+import { useTranslations } from '../i18n';
+import { assetPath } from '../lib/routes';
+
+interface Props {
+  lang: Locale;
+  title: string;
+  description: string;
+  /** URL de esta misma página en cada idioma (selector de idioma y hreflang). */
+  alternates: Partial<Record<Locale, string>>;
+  bodyClass?: string;
+  noindex?: boolean;
+}
+
+const { lang, title, description, alternates, bodyClass, noindex = true } = Astro.props;
+const t = useTranslations(lang);
+const locale = locales[lang];
+/** URL absoluta (canonical, hreflang). `site` se define en astro.config.mjs. */
+const absolute = (path: string) => new URL(path, Astro.site).href;
+---
+
+<!doctype html>
+<html lang={locale.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {/* Guía para huéspedes: no se ofrece a los buscadores. */}
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#f7f3ec" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href={assetPath('favicon.svg')} type="image/svg+xml" />
+    <link rel="canonical" href={absolute(Astro.url.pathname)} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={locale.ogLocale} />
+    <meta property="og:type" content="website" />
+    {
+      Object.entries(alternates).map(([code, href]) => (
+        <link rel="alternate" hreflang={locales[code as Locale].htmlLang} href={absolute(href)} />
+      ))
+    }
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main">{t('a11y.skip')}</a>
+    <slot />
+  </body>
+</html>

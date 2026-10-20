@@ -1,0 +1,27 @@
+{
+  "name": "platinum-suites-guide",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Guía digital para huéspedes de Platinum Suites Cochabamba (Suite Tunari y Suite Concordia).",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev --open",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.3",
+    "@fontsource-variable/cormorant-garamond": "^5.3.0",
+    "@fontsource-variable/jost": "^5.3.0",
+    "astro": "^7.4.0",
+    "lucide-static": "^1.58.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^26.6.5",
+    "typescript": "^5.9.3"
+  }
+}

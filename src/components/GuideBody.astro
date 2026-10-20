@@ -1,0 +1,199 @@
+---
+/**
+ * Une el Markdown común con los datos y bloques de la suite.
+ *
+ *  · `{{bloque}}` en un párrafo propio → se sustituye por un componente (slot con ese nombre).
+ *  · `{{dato}}` dentro del texto      → se sustituye por un valor de la suite o de site.yaml.
+ *
+ * Un token desconocido detiene la compilación con un mensaje claro, para que un error de
+ * escritura en el Markdown no llegue a los huéspedes.
+ *
+ * También construye el índice (escritorio), la barra inferior y el índice desplegable (móvil)
+ * a partir de las secciones `## Título {#id}`.
+ */
+import Icon from './Icon.astro';
+import { iconSvg, sectionIcons } from '../lib/icons';
+import type { Translator } from '../i18n';
+
+/** Bloques admitidos. Para añadir uno: créelo aquí y pase un slot con el mismo nombre. */
+const WIDGETS = [
+  'suite',
+  'gallery',
+  'gallery-pool',
+  'wifi',
+  'map',
+  'places-eat',
+  'places-visit',
+  'contacts',
+  'emergency',
+  'directions',
+] as const;
+
+interface Props {
+  /** Valores para `{{dato}}`. */
+  values: Record<string, string | number>;
+  t: Translator;
+  /** Archivo de origen, para los mensajes de error. */
+  source: string;
+  /** Idioma real del contenido cuando se muestra el de respaldo (fallback). */
+  contentLang?: string;
+  /** Idioma real del contenido de la suite cuando se muestra el de respaldo. */
+  suiteLang?: string;
+}
+
+const { values, t, source, contentLang, suiteLang } = Astro.props;
+
+const escapeHtml = (value: string) =>
+  value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+let html: string = await Astro.slots.render('default');
+
+// 0. Secciones `##` propias de la suite: se sacan de su sección y se colocan donde `{{suite-<id>}}`.
+let suiteHtml = Astro.slots.has('suite') ? await Astro.slots.render('suite') : '';
+const suiteSections = new Map<string, string>();
+suiteHtml = suiteHtml.replace(/<section\b[^>]*class="guide-section"[^>]*>[\s\S]*?<\/section>/g, (section) => {
+  const id = section.match(/\sid="([^"]+)"/)?.[1] ?? '';
+  const lang = suiteLang ? ` lang="${suiteLang}"` : '';
+  suiteSections.set(id, section.replace(/^<section\b/, `<section${lang}`));
+  return '';
+});
+for (const [id, section] of suiteSections) {
+  const token = new RegExp(`<p>\\s*\\{\\{\\s*suite-${id}\\s*\\}\\}\\s*</p>`, 'g');
+  if (!token.test(html)) {
+    throw new Error(`${source}: falta {{suite-${id}}} para colocar la sección "${id}" de la suite.`);
+  }
+  html = html.replace(token, () => section);
+}
+
+// 1. Bloques (componentes).
+for (const name of WIDGETS) {
+  const token = new RegExp(`\\{\\{\\s*${name}\\s*\\}\\}`, 'g');
+  if (!token.test(html)) continue;
+  const widget = name === 'suite' ? suiteHtml : Astro.slots.has(name) ? await Astro.slots.render(name) : '';
+  html = html
+    .replace(new RegExp(`<p>\\s*\\{\\{\\s*${name}\\s*\\}\\}\\s*</p>`, 'g'), () => widget)
+    .replace(token, () => widget);
+}
+
+// 2. Datos.
+const unknown = new Set<string>();
+html = html.replace(/\{\{\s*([\w.-]+)\s*\}\}/g, (match, key: string) => {
+  if (key in values) return escapeHtml(String(values[key]));
+  unknown.add(key);
+  return match;
+});
+if (unknown.size > 0) {
+  throw new Error(
+    `${source}: token(s) desconocido(s) ${[...unknown].map((k) => `{{${k}}}`).join(', ')}. ` +
+      `Tokens válidos: ${[...WIDGETS, ...Object.keys(values)].map((k) => `{{${k}}}`).join(', ')}.`,
+  );
+}
+
+// 3. Icono de cada sección.
+html = html.replace(/<h2 id="([\w-]+)-title">/g, (match, id: string) => {
+  const icon = sectionIcons[id] ?? 'info';
+  return `${match}<span class="section-icon">${iconSvg(icon, 20)}</span>`;
+});
+
+// 4. Índice a partir de las secciones.
+const sections = [...html.matchAll(/<section\b[^>]*class="guide-section"[^>]*>/g)].map(([tag]) => ({
+  id: tag.match(/\sid="([^"]+)"/)?.[1] ?? '',
+  title: tag.match(/\sdata-title="([^"]*)"/)?.[1] ?? '',
+}));
+
+const quick = [
+  { id: 'wifi', label: t('nav.wifi'), icon: 'wifi' as const },
+  { id: 'llegada', label: t('nav.arrival'), icon: 'key' as const },
+  { id: 'reglas', label: t('nav.rules'), icon: 'list' as const },
+  { id: 'contacto', label: t('nav.help'), icon: 'message' as const },
+].filter((item) => sections.some((s) => s.id === item.id));
+---
+
+<div class="guide-layout">
+  <nav class="toc" aria-label={t('guide.contents')}>
+    <p class="toc-title">{t('guide.contents')}</p>
+    <ol>
+      {
+        sections.map((s) => (
+          <li>
+            <a href={`#${s.id}`} data-toc-link={s.id}>
+              <Fragment set:html={iconSvg(sectionIcons[s.id] ?? 'info', 16)} />
+              <span set:html={s.title} />
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  <div class="guide-content prose" id="contenido" lang={contentLang} set:html={html} />
+</div>
+
+<nav class="bottom-nav" aria-label={t('a11y.mainNav')}>
+  {
+    quick.map((item) => (
+      <a href={`#${item.id}`} class="bottom-nav-item" data-toc-link={item.id}>
+        <Icon name={item.icon} size={20} />
+        <span>{item.label}</span>
+      </a>
+    ))
+  }
+  <button type="button" class="bottom-nav-item" data-open-index aria-haspopup="dialog">
+    <Icon name="menu" size={20} />
+    <span>{t('nav.index')}</span>
+  </button>
+</nav>
+
+<dialog class="index-sheet" aria-labelledby="index-sheet-title">
+  <div class="index-sheet-head">
+    <p id="index-sheet-title" class="toc-title">{t('guide.contents')}</p>
+    <button type="button" class="lightbox-btn index-close" data-close-index aria-label={t('action.close')}>
+      <Icon name="x" size={20} />
+    </button>
+  </div>
+  <ol class="index-sheet-list">
+    {
+      sections.map((s) => (
+        <li>
+          <a href={`#${s.id}`} data-close-index>
+            <Fragment set:html={iconSvg(sectionIcons[s.id] ?? 'info', 18)} />
+            <span set:html={s.title} />
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</dialog>
+
+<script>
+  // Índice desplegable (móvil).
+  const sheet = document.querySelector<HTMLDialogElement>('dialog.index-sheet');
+  const opener = document.querySelector<HTMLButtonElement>('[data-open-index]');
+  opener?.addEventListener('click', () => sheet?.showModal());
+  sheet?.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    if (target === sheet || target.closest('[data-close-index]')) sheet.close();
+  });
+  sheet?.addEventListener('close', () => opener?.focus({ preventScroll: true }));
+
+  // Resalta la sección visible en el índice y en la barra inferior.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')];
+  const sections = [...document.querySelectorAll<HTMLElement>('.guide-section')];
+  if ('IntersectionObserver' in window && sections.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (!visible.length) return;
+        const id = visible[0].target.id;
+        links.forEach((link) => {
+          const active = link.dataset.tocLink === id;
+          link.classList.toggle('is-active', active);
+          if (active) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+      },
+      { rootMargin: '-20% 0px -70% 0px' },
+    );
+    sections.forEach((s) => observer.observe(s));
+  }
+</script>

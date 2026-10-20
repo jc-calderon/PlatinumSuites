@@ -1,0 +1,19 @@
+---
+/**
+ * Composición tipográfica para cuando todavía no hay fotografía.
+ * Desaparece sola en cuanto se añade una imagen a la carpeta correspondiente.
+ */
+interface Props {
+  title: string;
+  caption?: string;
+  class?: string;
+}
+
+const { title, caption, class: className = '' } = Astro.props;
+---
+
+<div class:list={['placeholder', className]} role="img" aria-label={caption ? `${title}. ${caption}` : title}>
+  <span class="placeholder-mark" aria-hidden="true">PS</span>
+  <span class="placeholder-title" aria-hidden="true">{title}</span>
+  {caption && <span class="placeholder-caption" aria-hidden="true">{caption}</span>}
+</div>

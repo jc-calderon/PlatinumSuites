@@ -1,0 +1,49 @@
+# Datos generales de Platinum Suites, comunes a ambas suites y a todos los idiomas.
+# Edite los valores y guarde: en desarrollo (npm run dev) la página se actualiza sola.
+# Los textos traducibles usan claves de idioma: { es: "...", en: "..." }.
+# Procedencia de cada dato: docs/FUENTES.md
+
+site:
+  brand: Platinum Suites Cochabamba
+
+  building:
+    name: Edificio Fontana Di Fiori
+    area: Cala Cala, zona norte · Cochabamba, Bolivia
+    # Enlace exacto confirmado por el propietario.
+    maps: https://maps.app.goo.gl/mwp3qNEZNsZ3TqEUA
+
+  stay:
+    checkin:
+      es: "15:00"
+      en: "3:00 PM"
+    checkout:
+      es: "12:00 (mediodía)"
+      en: "12:00 PM (noon)"
+
+  hosts:
+    names: Claudia y Juan Carlos
+    # Formato internacional (+591 = Bolivia). Se usa en wa.me y tel:.
+    phone: "+59165754543"
+    display: "6575 4543"
+
+  # Publicación autorizada por el propietario. El QR está en
+  # src/content/images/common/wifi/ (reemplace el archivo para cambiarlo).
+  wifi:
+    ssid: PlatinumWiFi
+    password: relax123
+
+  # Números de la guía impresa (03.png); Policía corregida a 110 por el propietario.
+  # Verifíquelos periódicamente.
+  emergency:
+    - label: { es: "Emergencias (SAR-Bolivia)", en: "Emergencies (SAR-Bolivia)" }
+      number: "62629999"
+    - label: { es: "Policía", en: "Police" }
+      number: "110"
+    - label: { es: "Ambulancia (Delta Med)", en: "Ambulance (Delta Med)" }
+      number: "71428336"
+
+  # Mapa de Google My Maps "Platinum Suites - Alrededores", mantenido por el propietario.
+  # Para usar otro mapa, cambie el valor de mid= en ambas URLs.
+  map:
+    embed: https://www.google.com/maps/d/embed?mid=1Q0mRiQN-L9Bg-LimAF2vJXO1z0Agcvc&ehbc=2E312F&noprof=1
+    viewer: https://www.google.com/maps/d/viewer?mid=1Q0mRiQN-L9Bg-LimAF2vJXO1z0Agcvc

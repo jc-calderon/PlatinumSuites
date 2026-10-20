@@ -1,0 +1,28 @@
+---
+import Icon from '../Icon.astro';
+import { pick, type Locale, type LocalizedText } from '../../i18n';
+
+interface Props {
+  items: { label: LocalizedText; number: string }[];
+  lang: Locale;
+}
+
+const { items, lang } = Astro.props;
+---
+
+<ul class="emergency-list">
+  {
+    items.map((item) => (
+      <li>
+        <a class="emergency-item" href={`tel:${item.number}`}>
+          <span class="emergency-icon">
+            <Icon name="siren" size={18} />
+          </span>
+          <span class="emergency-label">{pick(item.label, lang)}</span>
+          <span class="emergency-number">{item.number}</span>
+          <Icon name="phone" size={16} class="icon emergency-call" />
+        </a>
+      </li>
+    ))
+  }
+</ul>

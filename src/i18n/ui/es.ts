@@ -1,0 +1,95 @@
+/** Textos de interfaz en español (idioma de referencia: define todas las claves). */
+export const es = {
+  'a11y.skip': 'Saltar al contenido',
+  'a11y.langSwitch': 'Cambiar idioma',
+  'a11y.mainNav': 'Navegación de la guía',
+
+  'brand.name': 'Platinum Suites',
+  'brand.city': 'Cochabamba',
+  'brand.building': 'Edificio Fontana Di Fiori · Cala Cala',
+
+  'home.metaTitle': 'Platinum Suites Cochabamba · Guía para huéspedes',
+  'home.metaDescription':
+    'Guía digital de bienvenida de Platinum Suites Cochabamba: Suite Tunari y Suite Concordia. Wi-Fi, llegada, reglas, piscina y recomendaciones.',
+  'home.eyebrow': 'Guía digital de bienvenida',
+  'home.title': 'Bienvenidos a Platinum Suites',
+  'home.intro':
+    'Un refugio de estilo premium en la zona norte de Cochabamba. Diseñado para ofrecer más que solo un lugar donde pasar la noche, aquí descubrirá el lujo hecho hospedaje. Elija su suite para ver toda la información de su estadía.',
+  'home.choose': 'Elija su suite',
+  'home.open': 'Abrir guía',
+  'home.help': '¿Necesita ayuda?',
+  'home.helpText': 'Escríbanos por WhatsApp y le responderemos lo antes posible.',
+
+  'suite.floor': 'Piso',
+  'suite.guests': 'Huéspedes',
+  'suite.upTo': 'Hasta {n}',
+  'suite.parking': 'Parqueo',
+  'suite.parkingSpot': 'Nº {n}',
+  'suite.checkin': 'Ingreso',
+  'suite.checkout': 'Salida',
+  'suite.photosSoon': 'Fotografías próximamente',
+
+  'guide.metaTitle': '{suite} · Guía para huéspedes · Platinum Suites',
+  'guide.allSuites': 'Todas las suites',
+  'guide.contents': 'Contenido',
+  'guide.gallery': 'Galería de fotos',
+  'guide.provisionalPhotos': 'Fotografías provisionales tomadas de la guía impresa.',
+
+  'nav.wifi': 'Wi-Fi',
+  'nav.arrival': 'Llegada',
+  'nav.rules': 'Reglas',
+  'nav.help': 'Ayuda',
+  'nav.index': 'Índice',
+
+  'action.copy': 'Copiar',
+  'action.copied': 'Copiado',
+  'action.copyFailed': 'No se pudo copiar',
+  'action.copyPassword': 'Copiar contraseña',
+  'action.whatsapp': 'WhatsApp',
+  'action.call': 'Llamar',
+  'action.directions': 'Cómo llegar',
+  'action.openMaps': 'Ver en Google Maps',
+  'action.fullscreenMap': 'Abrir mapa en pantalla completa',
+  'action.openPhoto': 'Ampliar foto {n} de {total}',
+  'action.prev': 'Anterior',
+  'action.next': 'Siguiente',
+  'action.close': 'Cerrar',
+
+  'wifi.network': 'Red',
+  'wifi.password': 'Contraseña',
+  'wifi.qrAlt': 'Código QR para conectarse a la red Wi-Fi {ssid}',
+  'wifi.scan': 'Escanee el código con la cámara de su teléfono para conectarse automáticamente.',
+
+  'contact.hosts': 'Sus anfitriones',
+  'contact.whatsappText': 'Hola, somos huéspedes de {suite}.',
+  'contact.emergency': 'Contactos de emergencia',
+
+  'places.recommended': 'Recomendado por el anfitrión',
+  'places.order': 'Pida',
+  'places.mapTitle': 'Mapa de lugares cercanos a Platinum Suites',
+  'places.mapFallback': 'Si el mapa no carga, use los enlaces de cada lugar.',
+  'places.city': 'En la ciudad',
+  'places.trip': 'Escapadas de un día o más',
+
+  'category.supermarket': 'Supermercado',
+  'category.pharmacy': 'Farmacia',
+  'category.food': 'Comida',
+  'category.bakery': 'Panadería y masitas',
+  'category.typical': 'Comida típica',
+  'category.landmark': 'Lugar de interés',
+  'category.nature': 'Naturaleza',
+  'category.museum': 'Museo',
+  'category.market': 'Mercado',
+  'category.walk': 'Paseo',
+
+  'notice.fallback': 'Este contenido aún no está disponible en {lang}; se muestra en {fallback}.',
+  'notice.unreviewed': 'Traducción pendiente de revisión por los anfitriones.',
+  'notice.pending': 'Información en preparación.',
+
+  'footer.signature': 'Con cariño, el equipo de Platinum Suites',
+
+  '404.metaTitle': 'Página no encontrada · Platinum Suites',
+  '404.title': 'No encontramos esta página',
+  '404.text': 'Es posible que el enlace esté incompleto. Elija su suite desde la portada.',
+  '404.back': 'Ir a la portada',
+} as const;

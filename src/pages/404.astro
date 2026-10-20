@@ -1,0 +1,37 @@
+---
+/**
+ * Página 404. Un sitio estático no sabe el idioma de una URL desconocida,
+ * así que se muestra en todos los idiomas admitidos.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import Icon from '../components/Icon.astro';
+import { defaultLocale, localeList, locales } from '../i18n/config';
+import { useTranslations } from '../i18n';
+import { homePath } from '../lib/routes';
+
+const t = useTranslations(defaultLocale);
+const alternates = Object.fromEntries(localeList.map((code) => [code, homePath(code)]));
+---
+
+<BaseLayout lang={defaultLocale} title={t('404.metaTitle')} description={t('404.text')} alternates={alternates} bodyClass="page-404">
+  <SiteHeader lang={defaultLocale} alternates={alternates} />
+  <main id="main" class="container not-found">
+    <p class="not-found-code" aria-hidden="true">404</p>
+    {
+      localeList.map((code) => {
+        const tl = useTranslations(code);
+        return (
+          <section lang={locales[code].htmlLang} class="not-found-block">
+            <h1 class="not-found-title">{tl('404.title')}</h1>
+            <p class="muted">{tl('404.text')}</p>
+            <a class="btn btn-primary" href={homePath(code)}>
+              <Icon name="arrow-left" size={18} />
+              {tl('404.back')}
+            </a>
+          </section>
+        );
+      })
+    }
+  </main>
+</BaseLayout>

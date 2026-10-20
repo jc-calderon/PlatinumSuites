@@ -1,0 +1,64 @@
+---
+import Icon from '../Icon.astro';
+import { categoryIcons } from '../../lib/icons';
+import { pick, type Locale, type Translator, type UiKey } from '../../i18n';
+import type { Place } from '../../lib/content';
+
+interface Props {
+  places: Place[];
+  lang: Locale;
+  t: Translator;
+  /** compact = tarjetas pequeñas bajo el mapa · scroll = carrusel horizontal en móvil */
+  variant?: 'compact' | 'scroll' | 'grid';
+}
+
+const { places, lang, t, variant = 'grid' } = Astro.props;
+const label = (cat: string) => t(`category.${cat}` as UiKey);
+---
+
+{
+  places.length === 0 ? (
+    <p class="muted">{t('notice.pending')}</p>
+  ) : (
+    <ul class:list={['place-list', `place-list-${variant}`]}>
+      {places.map((place) => {
+        const icon = categoryIcons[place.categories[0]] ?? 'map-pin';
+        const order = pick(place.order, lang);
+        return (
+          <li class:list={['place-card', { 'is-recommended': place.recommended }]}>
+            <div class="place-head">
+              <span class="place-icon">
+                <Icon name={icon} size={18} />
+              </span>
+              <div>
+                <p class="place-cats">{place.categories.map(label).join(' · ')}</p>
+                <h4 class="place-name">{place.name}</h4>
+              </div>
+            </div>
+            {place.recommended && (
+              <p class="badge">
+                <Icon name="star" size={14} /> {t('places.recommended')}
+              </p>
+            )}
+            <p class="place-desc">{pick(place.description, lang)}</p>
+            {order && (
+              <p class="place-order">
+                <span>{t('places.order')}:</span> {order}
+              </p>
+            )}
+            {place.area && (
+              <p class="place-area">
+                <Icon name="map-pin" size={14} /> {place.area}
+              </p>
+            )}
+            <a class="btn btn-ghost btn-sm place-link" href={place.maps} target="_blank" rel="noopener noreferrer">
+              <Icon name="map" size={16} />
+              {variant === 'compact' ? t('action.directions') : t('action.openMaps')}
+              <Icon name="arrow-up-right" size={14} />
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  )
+}

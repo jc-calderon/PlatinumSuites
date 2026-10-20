@@ -1,0 +1,44 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import Icon from './Icon.astro';
+import { homePath } from '../lib/routes';
+import { useTranslations } from '../i18n';
+import type { Locale } from '../i18n/config';
+
+interface Props {
+  lang: Locale;
+  alternates: Partial<Record<Locale, string>>;
+  /** Muestra el enlace discreto para volver a la portada / cambiar de suite. */
+  showBack?: boolean;
+  /** Variante transparente sobre la foto de portada. */
+  overlay?: boolean;
+}
+
+const { lang, alternates, showBack = false, overlay = false } = Astro.props;
+const t = useTranslations(lang);
+const home = homePath(lang);
+---
+
+<header class:list={['site-header', { 'site-header-overlay': overlay }]}>
+  <div class="site-header-inner">
+    {
+      showBack ? (
+        <a class="header-back" href={home}>
+          <Icon name="arrow-left" size={18} />
+          <span>{t('guide.allSuites')}</span>
+        </a>
+      ) : (
+        <a class="brand" href={home} aria-label={`${t('brand.name')} ${t('brand.city')}`}>
+          <span class="brand-mark" aria-hidden="true">
+            PS
+          </span>
+          <span class="brand-text" aria-hidden="true">
+            <span class="brand-name">{t('brand.name')}</span>
+            <span class="brand-city">{t('brand.city')}</span>
+          </span>
+        </a>
+      )
+    }
+    <LanguageSwitcher lang={lang} alternates={alternates} />
+  </div>
+</header>

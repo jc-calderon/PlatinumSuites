@@ -1,0 +1,128 @@
+---
+/**
+ * Galería generada automáticamente a partir de una carpeta de imágenes.
+ * Al tocar una miniatura se abre un visor a pantalla completa (<dialog> nativo).
+ */
+import { getImage } from 'astro:assets';
+import ResponsiveImage from '../ResponsiveImage.astro';
+import Placeholder from '../Placeholder.astro';
+import Icon from '../Icon.astro';
+import { imagesIn } from '../../lib/images';
+import type { Translator } from '../../i18n';
+
+interface Props {
+  folder: string;
+  title: string;
+  t: Translator;
+  /** Texto del placeholder si la carpeta está vacía. Sin él, no se muestra nada. */
+  emptyTitle?: string;
+  note?: string;
+}
+
+const { folder, title, t, emptyTitle, note } = Astro.props;
+const images = imagesIn(folder);
+const full = await Promise.all(images.map((img) => getImage({ src: img.src, format: 'webp' })));
+const id = `gallery-${folder.replace(/[^a-z0-9]+/gi, '-')}`;
+---
+
+{
+  images.length > 0 ? (
+    <div class="gallery" data-gallery={id}>
+      <ul class:list={['gallery-grid', `gallery-count-${Math.min(images.length, 5)}`]} aria-label={title}>
+        {images.map((img, i) => (
+          <li>
+            <button
+              type="button"
+              class:list={['gallery-item', { 'is-portrait': img.src.height > img.src.width * 1.2 }]}
+              data-index={i}
+              data-full={full[i].src}
+              data-alt={img.label}
+              aria-label={t('action.openPhoto', { n: i + 1, total: images.length })}
+            >
+              <ResponsiveImage
+                src={img.src}
+                alt={img.label}
+                sizes={i === 0 ? '(min-width: 760px) 640px, 100vw' : '(min-width: 760px) 320px, 50vw'}
+              />
+            </button>
+          </li>
+        ))}
+      </ul>
+      {note && <p class="gallery-note">{note}</p>}
+      <dialog class="lightbox" aria-label={title}>
+        <figure class="lightbox-figure">
+          <img alt="" class="lightbox-img" />
+          <figcaption class="lightbox-caption" />
+        </figure>
+        <button type="button" class="lightbox-btn lightbox-close" data-action="close" aria-label={t('action.close')}>
+          <Icon name="x" size={22} />
+        </button>
+        {images.length > 1 && (
+          <>
+            <button type="button" class="lightbox-btn lightbox-prev" data-action="prev" aria-label={t('action.prev')}>
+              <Icon name="chevron-left" size={26} />
+            </button>
+            <button type="button" class="lightbox-btn lightbox-next" data-action="next" aria-label={t('action.next')}>
+              <Icon name="chevron-right" size={26} />
+            </button>
+          </>
+        )}
+      </dialog>
+    </div>
+  ) : (
+    emptyTitle && <Placeholder title={emptyTitle} caption={t('suite.photosSoon')} class="gallery-placeholder" />
+  )
+}
+
+<script>
+  function setup(root: HTMLElement) {
+    const dialog = root.querySelector<HTMLDialogElement>('dialog.lightbox');
+    const img = root.querySelector<HTMLImageElement>('.lightbox-img');
+    const caption = root.querySelector<HTMLElement>('.lightbox-caption');
+    const items = [...root.querySelectorAll<HTMLButtonElement>('.gallery-item')];
+    if (!dialog || !img || !caption || items.length === 0) return;
+    let index = 0;
+    let opener: HTMLElement | null = null;
+
+    const show = (i: number) => {
+      index = (i + items.length) % items.length;
+      const item = items[index];
+      img.src = item.dataset.full ?? '';
+      img.alt = item.dataset.alt ?? '';
+      caption.textContent = `${item.dataset.alt ?? ''} · ${index + 1} / ${items.length}`;
+    };
+
+    items.forEach((item, i) =>
+      item.addEventListener('click', () => {
+        opener = item;
+        show(i);
+        dialog.showModal();
+      }),
+    );
+
+    dialog.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      const action = target.closest<HTMLElement>('[data-action]')?.dataset.action;
+      if (action === 'close' || target === dialog) dialog.close();
+      if (action === 'prev') show(index - 1);
+      if (action === 'next') show(index + 1);
+    });
+
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') show(index - 1);
+      if (event.key === 'ArrowRight') show(index + 1);
+    });
+
+    // Deslizar con el dedo para cambiar de foto.
+    let startX = 0;
+    dialog.addEventListener('touchstart', (e) => (startX = e.touches[0].clientX), { passive: true });
+    dialog.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+    });
+
+    dialog.addEventListener('close', () => opener?.focus());
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach(setup);
+</script>

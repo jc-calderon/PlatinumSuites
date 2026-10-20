@@ -1,0 +1,41 @@
+---
+import { localeList, locales, type Locale } from '../i18n/config';
+import { useTranslations } from '../i18n';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Locale;
+  /** URL de la página actual en cada idioma. */
+  alternates: Partial<Record<Locale, string>>;
+}
+
+const { lang, alternates } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<nav class="lang-switch" aria-label={t('a11y.langSwitch')}>
+  <Icon name="globe" size={16} />
+  <ul>
+    {
+      localeList.map((code) => {
+        const href = alternates[code];
+        if (!href) return null;
+        const current = code === lang;
+        return (
+          <li>
+            <a
+              href={href}
+              hreflang={locales[code].htmlLang}
+              lang={locales[code].htmlLang}
+              aria-current={current ? 'page' : undefined}
+              title={locales[code].label}
+            >
+              <span aria-hidden="true">{locales[code].short}</span>
+              <span class="sr-only">{locales[code].label}</span>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>

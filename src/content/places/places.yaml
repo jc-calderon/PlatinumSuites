@@ -1,0 +1,214 @@
+# Lugares de la sección "Alrededores", confirmados por el propietario (ver docs/source/lugares.md).
+#
+# Campos:
+#   id           identificador único (minúsculas, sin espacios)
+#   name         nombre (no se traduce)
+#   group        nearby = cerca (tarjetas bajo el mapa) · eat = recomendados del anfitrión
+#                city = qué visitar en la ciudad · trip = escapadas
+#   categories   supermarket, pharmacy, food, bakery, typical, landmark, nature, museum, market, walk
+#   recommended  true = muestra el distintivo "Recomendado por el anfitrión"
+#   order        plato recomendado (opcional, traducible)
+#   description  texto breve traducible { es, en }
+#   maps         enlace de Google Maps
+#   mapsType     exact = enlace exacto · search = búsqueda provisional (sustitúyala cuando tenga el exacto)
+#   coords       [latitud, longitud] (opcional, de referencia)
+#
+# Los pines del mapa se editan en Google My Maps, no aquí.
+
+# ---------- Cerca de Platinum Suites ----------
+- id: hipermaxi
+  name: Hipermaxi (sucursal Circunvalación)
+  group: nearby
+  categories: [supermarket, pharmacy]
+  description:
+    es: Supermercado cercano para alimentos y artículos de uso diario. Tiene farmacia dentro.
+    en: Nearby supermarket for groceries and everyday essentials, with a pharmacy inside.
+  maps: https://maps.app.goo.gl/AKUhCsgB68Jh98H87
+  mapsType: exact
+  coords: [-17.3640557, -66.1658652]
+
+- id: mama-chicken
+  name: Mamá Chicken
+  group: nearby
+  categories: [food]
+  description:
+    es: Pollo broaster famoso en Cochabamba.
+    en: Broasted chicken, famous in Cochabamba.
+  maps: https://maps.app.goo.gl/zstAG8jHEMbhTWdq5
+  mapsType: exact
+  coords: [-17.3631005, -66.1672699]
+
+- id: abuelita-ruth
+  name: Abuelita Ruth
+  group: nearby
+  categories: [bakery]
+  description:
+    es: Masitas, ideales para el desayuno o la merienda.
+    en: "“Masitas”: Bolivian baked goods and pastries, perfect for breakfast or an afternoon snack."
+  maps: https://maps.app.goo.gl/XrdDej9jvkL5QD4c6
+  mapsType: exact
+  coords: [-17.3631315, -66.1667208]
+
+# ---------- Dónde comer: recomendados del anfitrión ----------
+- id: dona-pola
+  name: Doña Pola
+  group: eat
+  categories: [typical]
+  recommended: true
+  area: Av. América
+  order: { es: chicharrón, en: chicharrón (fried pork) }
+  description:
+    es: El chicharrón más cercano al edificio.
+    en: The closest spot for chicharrón.
+  maps: https://www.google.com/maps/search/?api=1&query=Chicharroner%C3%ADa+Do%C3%B1a+Pola&query_place_id=ChIJ29k5nRZ045MRWONMeK7pHQc
+  mapsType: exact
+  coords: [-17.372534, -66.159343]
+
+- id: punto-de-encuentro
+  name: Punto de Encuentro (Sucursal 1)
+  group: eat
+  categories: [typical]
+  recommended: true
+  order: { es: charque, en: charque }
+  description:
+    es: Pruebe su charque, un plato tradicional cochabambino de carne deshidratada.
+    en: Try their charque, a traditional Cochabamba dish made with dried meat.
+  maps: https://maps.app.goo.gl/ZdHqABXHvv9WDBGS8
+  mapsType: exact
+  coords: [-17.3797669, -66.1688473]
+
+- id: chicharrones-originales-2
+  name: Los Chicharrones Originales 2
+  group: eat
+  categories: [typical]
+  recommended: true
+  area: Sacaba
+  order: { es: chicharrón, en: chicharrón (fried pork) }
+  description:
+    es: El auténtico chicharrón de Sacaba.
+    en: Authentic chicharrón from Sacaba.
+  maps: https://maps.app.goo.gl/niAuZ8KC1nyUPP2h8
+  mapsType: exact
+  coords: [-17.3894394, -66.0810847]
+
+# ---------- Qué visitar: en la ciudad ----------
+- id: cristo-concordia
+  name: Cristo de la Concordia
+  group: city
+  categories: [landmark]
+  description:
+    es: El ícono de Cochabamba, con vistas panorámicas de la ciudad. Se puede subir en teleférico o a pie.
+    en: Cochabamba's landmark, with panoramic city views. Reach it by cable car or on foot.
+  maps: https://www.google.com/maps/search/?api=1&query=Cristo+de+la+Concordia+Cochabamba
+  mapsType: search
+
+- id: palacio-portales
+  name: Palacio Portales
+  group: city
+  categories: [landmark]
+  description:
+    es: Antigua residencia de Simón I. Patiño, rodeada de jardines.
+    en: Former residence of tin magnate Simón I. Patiño, surrounded by gardens.
+  maps: https://www.google.com/maps/search/?api=1&query=Palacio+Portales+Cochabamba
+  mapsType: search
+
+- id: plaza-14-septiembre
+  name: Plaza 14 de Septiembre y Catedral Metropolitana
+  group: city
+  categories: [landmark]
+  description:
+    es: El corazón del centro histórico de Cochabamba.
+    en: The heart of Cochabamba's historic center.
+  maps: https://www.google.com/maps/search/?api=1&query=Plaza+14+de+Septiembre+Cochabamba
+  mapsType: search
+
+- id: santa-teresa
+  name: Convento de Santa Teresa
+  group: city
+  categories: [landmark, museum]
+  description:
+    es: Convento colonial con visitas guiadas.
+    en: Colonial convent offering guided tours.
+  maps: https://www.google.com/maps/search/?api=1&query=Convento+de+Santa+Teresa+Cochabamba
+  mapsType: search
+
+- id: la-cancha
+  name: La Cancha
+  group: city
+  categories: [market]
+  description:
+    es: Uno de los mercados al aire libre más grandes de Sudamérica. Cuide sus pertenencias.
+    en: One of the largest open-air markets in South America. Keep an eye on your belongings.
+  maps: https://www.google.com/maps/search/?api=1&query=La+Cancha+Cochabamba
+  mapsType: search
+
+- id: laguna-alalay
+  name: Laguna Alalay
+  group: city
+  categories: [nature]
+  description:
+    es: Laguna urbana para caminar y observar aves.
+    en: Urban lagoon for walking and birdwatching.
+  maps: https://www.google.com/maps/search/?api=1&query=Laguna+Alalay+Cochabamba
+  mapsType: search
+
+- id: el-prado
+  name: El Prado (Av. Ballivián)
+  group: city
+  categories: [walk]
+  description:
+    es: Paseo tradicional con cafés y restaurantes.
+    en: Traditional boulevard lined with cafés and restaurants.
+  maps: https://www.google.com/maps/search/?api=1&query=El+Prado+Avenida+Ballivi%C3%A1n+Cochabamba
+  mapsType: search
+
+- id: museo-umss
+  name: Museo Arqueológico de la UMSS
+  group: city
+  categories: [museum]
+  description:
+    es: Museo de arqueología y etnografía de la Universidad Mayor de San Simón.
+    en: Archaeology and ethnography museum of the Universidad Mayor de San Simón.
+  maps: https://www.google.com/maps/search/?api=1&query=Museo+Arqueol%C3%B3gico+UMSS+Cochabamba
+  mapsType: search
+
+# ---------- Qué visitar: escapadas ----------
+- id: parque-tunari
+  name: Parque Nacional Tunari
+  group: trip
+  categories: [nature]
+  description:
+    es: Montañas y miradores sobre el valle de Cochabamba.
+    en: Mountains and viewpoints overlooking the Cochabamba valley.
+  maps: https://www.google.com/maps/search/?api=1&query=Parque+Nacional+Tunari
+  mapsType: search
+
+- id: urkupina
+  name: Quillacollo y Santuario de Urkupiña
+  group: trip
+  categories: [landmark]
+  description:
+    es: Ciudad vecina, conocida por el santuario de la Virgen de Urkupiña.
+    en: Neighboring town known for the Virgin of Urkupiña sanctuary.
+  maps: https://www.google.com/maps/search/?api=1&query=Santuario+de+Urkupi%C3%B1a+Quillacollo
+  mapsType: search
+
+- id: tarata
+  name: Tarata
+  group: trip
+  categories: [landmark]
+  description:
+    es: Pueblo colonial del valle, ideal para una excursión de un día.
+    en: Colonial valley town, ideal for a day trip.
+  maps: https://www.google.com/maps/search/?api=1&query=Tarata+Cochabamba+Bolivia
+  mapsType: search
+
+- id: torotoro
+  name: Parque Nacional Torotoro
+  group: trip
+  categories: [nature]
+  description:
+    es: Huellas de dinosaurios, cañones y cavernas. Queda a varias horas de la ciudad; se recomienda un tour de más de un día.
+    en: Dinosaur tracks, canyons and caves. It is several hours from the city; a multi-day tour is recommended.
+  maps: https://www.google.com/maps/search/?api=1&query=Parque+Nacional+Torotoro
+  mapsType: search

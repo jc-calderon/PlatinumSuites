@@ -1,0 +1,35 @@
+---
+import Icon from '../Icon.astro';
+import type { Translator } from '../../i18n';
+
+interface Props {
+  names: string;
+  phone: string;
+  display: string;
+  /** Nombre de la suite para el mensaje predefinido de WhatsApp. */
+  suiteName?: string;
+  t: Translator;
+}
+
+const { names, phone, display, suiteName, t } = Astro.props;
+const digits = phone.replace(/\D/g, '');
+const text = suiteName ? `?text=${encodeURIComponent(t('contact.whatsappText', { suite: suiteName }))}` : '';
+---
+
+<div class="contact-card">
+  <div class="contact-info">
+    <p class="contact-eyebrow">{t('contact.hosts')}</p>
+    <p class="contact-names">{names}</p>
+    <p class="contact-phone">{display}</p>
+  </div>
+  <div class="contact-actions">
+    <a class="btn btn-whatsapp" href={`https://wa.me/${digits}${text}`} target="_blank" rel="noopener noreferrer">
+      <Icon name="message" size={18} />
+      {t('action.whatsapp')}
+    </a>
+    <a class="btn btn-ghost" href={`tel:${phone}`}>
+      <Icon name="phone" size={18} />
+      {t('action.call')}
+    </a>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+# Dependencias y salida del build
+node_modules/
+dist/
+.astro/
+
+# Sistema operativo / editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Registros y variables de entorno
+*.log
+.env
+.env.*

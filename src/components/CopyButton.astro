@@ -1,0 +1,75 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  /** Texto que se copia al portapapeles. */
+  value: string;
+  label: string;
+  copiedLabel: string;
+  failedLabel: string;
+  class?: string;
+}
+
+const { value, label, copiedLabel, failedLabel, class: className = '' } = Astro.props;
+---
+
+<button
+  type="button"
+  class:list={['btn btn-copy', className]}
+  data-copy={value}
+  data-label={label}
+  data-copied={copiedLabel}
+  data-failed={failedLabel}
+>
+  <span class="btn-copy-icon" data-icon="copy"><Icon name="copy" size={18} /></span>
+  <span class="btn-copy-icon" data-icon="check" hidden><Icon name="check" size={18} /></span>
+  <span class="btn-copy-text">{label}</span>
+</button>
+<span class="sr-only" aria-live="polite" data-copy-status></span>
+
+<script>
+  async function copyText(text: string): Promise<boolean> {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Alternativa para navegadores sin acceso al portapapeles (p. ej. http en la red local).
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      let ok = false;
+      try {
+        ok = document.execCommand('copy');
+      } catch {
+        ok = false;
+      }
+      area.remove();
+      return ok;
+    }
+  }
+
+  document.addEventListener('click', async (event) => {
+    const button = (event.target as HTMLElement).closest<HTMLButtonElement>('button[data-copy]');
+    if (!button) return;
+    const ok = await copyText(button.dataset.copy ?? '');
+    const text = button.querySelector('.btn-copy-text');
+    const status = button.nextElementSibling as HTMLElement | null;
+    const message = ok ? button.dataset.copied : button.dataset.failed;
+    if (text) text.textContent = message ?? '';
+    if (status?.hasAttribute('data-copy-status')) status.textContent = message ?? '';
+    button.classList.toggle('is-copied', ok);
+    button.querySelector<HTMLElement>('[data-icon="copy"]')!.hidden = ok;
+    button.querySelector<HTMLElement>('[data-icon="check"]')!.hidden = !ok;
+    window.setTimeout(() => {
+      if (text) text.textContent = button.dataset.label ?? '';
+      if (status) status.textContent = '';
+      button.classList.remove('is-copied');
+      button.querySelector<HTMLElement>('[data-icon="copy"]')!.hidden = false;
+      button.querySelector<HTMLElement>('[data-icon="check"]')!.hidden = true;
+    }, 2200);
+  });
+</script>

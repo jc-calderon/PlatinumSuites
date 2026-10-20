@@ -1,0 +1,34 @@
+---
+/**
+ * Genera en el build todas las páginas del sitio a partir de la configuración central:
+ *
+ *   /                          portada (es)      /en/                     portada (en)
+ *   /departamentos/tunari      guía (es)         /en/suites/tunari        guía (en)
+ *   /departamentos/concordia   guía (es)         /en/suites/concordia     guía (en)
+ *
+ * Al añadir un idioma en src/i18n/config.ts, sus rutas se generan solas.
+ */
+import type { GetStaticPaths } from 'astro';
+import HomeView from '../components/HomeView.astro';
+import GuideView from '../components/GuideView.astro';
+import { localeList, suiteIds, type Locale, type SuiteId } from '../i18n/config';
+import { guidePath, homePath, routeParam } from '../lib/routes';
+
+export const getStaticPaths = (() => {
+  return localeList.flatMap((lang) => [
+    { params: { route: routeParam(homePath(lang)) }, props: { view: 'home' as const, lang } },
+    ...suiteIds.map((suite) => ({
+      params: { route: routeParam(guidePath(lang, suite)) },
+      props: { view: 'guide' as const, lang, suite },
+    })),
+  ]);
+}) satisfies GetStaticPaths;
+
+type Props =
+  | { view: 'home'; lang: Locale }
+  | { view: 'guide'; lang: Locale; suite: SuiteId };
+
+const props = Astro.props as Props;
+---
+
+{props.view === 'home' ? <HomeView lang={props.lang} /> : <GuideView lang={props.lang} suite={props.suite} />}

@@ -1,0 +1,59 @@
+---
+import { Image } from 'astro:assets';
+import CopyButton from '../CopyButton.astro';
+import Icon from '../Icon.astro';
+import { firstImage } from '../../lib/images';
+import type { Translator } from '../../i18n';
+
+interface Props {
+  ssid: string;
+  password: string;
+  t: Translator;
+}
+
+const { ssid, password, t } = Astro.props;
+// El QR se toma de la carpeta: reemplace el archivo para cambiarlo.
+const qr = firstImage('common/wifi');
+---
+
+<div class="wifi-card">
+  {
+    qr && (
+      <figure class="wifi-qr">
+        {/* Grande y primero: se muestra el teléfono a otros huéspedes para que lo escaneen. */}
+        <Image
+          src={qr.src}
+          alt={t('wifi.qrAlt', { ssid })}
+          widths={[360, 720, 1080].filter((w) => w <= qr.src.width * 1.5)}
+          sizes="(min-width: 640px) 300px, calc(100vw - 5rem)"
+          loading="lazy"
+        />
+        <figcaption>{t('wifi.scan')}</figcaption>
+      </figure>
+    )
+  }
+  <dl class="wifi-data">
+    <div class="wifi-row">
+      <dt><Icon name="wifi" size={18} /> {t('wifi.network')}</dt>
+      <dd class="wifi-value">{ssid}</dd>
+      <CopyButton
+        value={ssid}
+        label={t('action.copy')}
+        copiedLabel={t('action.copied')}
+        failedLabel={t('action.copyFailed')}
+        class="btn-ghost btn-sm"
+      />
+    </div>
+    <div class="wifi-row">
+      <dt><Icon name="key" size={18} /> {t('wifi.password')}</dt>
+      <dd class="wifi-value wifi-password">{password}</dd>
+      <CopyButton
+        value={password}
+        label={t('action.copyPassword')}
+        copiedLabel={t('action.copied')}
+        failedLabel={t('action.copyFailed')}
+        class="btn-primary btn-sm"
+      />
+    </div>
+  </dl>
+</div>

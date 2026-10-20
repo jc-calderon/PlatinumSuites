@@ -1,0 +1,25 @@
+---
+import Icon from './Icon.astro';
+import type { IconName } from '../lib/icons';
+
+interface Props {
+  items: { icon: IconName; label: string; value: string }[];
+  class?: string;
+}
+
+const { items, class: className = '' } = Astro.props;
+---
+
+<dl class:list={['facts', className]}>
+  {
+    items.map((item) => (
+      <div class="fact">
+        <dt>
+          <Icon name={item.icon} size={16} />
+          {item.label}
+        </dt>
+        <dd>{item.value}</dd>
+      </div>
+    ))
+  }
+</dl>
