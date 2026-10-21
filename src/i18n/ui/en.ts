@@ -48,7 +48,6 @@ export const en: UiDictionary = {
   'action.copyFailed': 'Could not copy',
   'action.copyPassword': 'Copy password',
   'action.whatsapp': 'WhatsApp',
-  'action.call': 'Call',
   'action.directions': 'Get directions',
   'action.openMaps': 'View on Google Maps',
   'action.fullscreenMap': 'Open full-screen map',

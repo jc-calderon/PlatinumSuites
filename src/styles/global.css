@@ -1471,17 +1471,13 @@ p {
 
 .contact-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 0.5rem;
 }
 
 /* Enlace al anuncio de la suite en Airbnb, bajo la tarjeta de anfitriones. */
 .airbnb-card {
   margin-top: 1rem;
-}
-
-.airbnb-card .contact-actions {
-  grid-template-columns: 1fr;
 }
 
 /* En la portada, .home-extra ya separa los bloques. */

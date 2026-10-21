@@ -162,7 +162,7 @@ Ejemplo: `Su espacio es el **Nº {{parking.spot}}**` → «Su espacio es el **N�
 | `{{map}}`          | Mapa de My Maps + tarjetas de lugares cercanos                 |
 | `{{places-eat}}`   | Recomendados del anfitrión                                     |
 | `{{places-visit}}` | Qué visitar (en la ciudad y escapadas)                         |
-| `{{contacts}}`     | Tarjeta de anfitriones con WhatsApp y llamada                  |
+| `{{contacts}}`     | Tarjeta de anfitriones con el botón de WhatsApp                |
 | `{{airbnb}}`       | Tarjeta de Airbnb: enlace al anuncio de la suite, a todos los alojamientos y reconocimientos. La portada muestra la insignia de Superanfitriona y «todos los alojamientos» |
 | `{{emergency}}`    | Números de emergencia (tocar para llamar)                      |
 | `{{directions}}`   | Enlace «Cómo llegar» al edificio (puede ir dentro de una frase) |
@@ -270,7 +270,7 @@ npm run preview    # revisión local en http://localhost:4321
 
 - Un sitio estático publicado es **público**: cualquiera con el enlace puede verlo. Esta guía **no es privada** ni está protegida con contraseña. Las páginas incluyen `noindex` para que los buscadores no las muestren, pero eso no impide el acceso.
 - La red y la contraseña del Wi-Fi para huéspedes, y su QR, se publican **por decisión del propietario**.
-- El **código de la cerradura no se publica**: se envía a cada huésped antes de su llegada.
+- **Nada sobre la cerradura ni su código se publica**, ni siquiera cómo funciona: la guía solo dice que la información de ingreso se envía a cada huésped antes de su llegada.
 - La red Wi-Fi antigua que aparece en `docs/source/Rules.docx` está obsoleta y no se copió al sitio.
 - `docs/` no forma parte del sitio publicado ni se copia al repositorio público: solo existe en `PlatinumSuites-dev` (privado).
 

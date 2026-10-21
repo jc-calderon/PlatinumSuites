@@ -33,16 +33,13 @@ Thank you for choosing us. May your time here be more than a stay: an unforgetta
 
 - Under building rules, **only previously registered guests** carrying a **valid ID** may enter.
 - The building has a **lobby** and an **elevator**. Your suite is on **floor {{floor}}**.
-- The suite has a **smart lock**: press **\*** followed by the **6-digit code** we will send you in advance.
-
-> [!NOTE]
-> For security reasons, the access code is not published in this guide: you will receive it by message before your arrival.
+- We will send you the **entry information** for the suite by message **before your arrival**.
 
 ### Check-out: by {{checkout}}
 
-Please leave the apartment by **12:00 noon**. This allows us to prepare the space for the next guests. Simply close the door when you leave.
-
-Before leaving, please check the [Before you leave](#antes-de-irse) list.
+- Please leave the apartment by **12:00 noon**: this allows us to prepare the space for the next guests.
+- Simply **close the door** when you leave.
+- Before leaving, please check the [Before you leave](#antes-de-irse) list.
 
 ## Parking {#estacionamiento}
 

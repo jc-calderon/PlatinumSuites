@@ -46,7 +46,6 @@ export const es = {
   'action.copyFailed': 'No se pudo copiar',
   'action.copyPassword': 'Copiar contraseña',
   'action.whatsapp': 'WhatsApp',
-  'action.call': 'Llamar',
   'action.directions': 'Cómo llegar',
   'action.openMaps': 'Ver en Google Maps',
   'action.fullscreenMap': 'Abrir mapa en pantalla completa',

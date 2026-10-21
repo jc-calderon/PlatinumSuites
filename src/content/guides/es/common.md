@@ -39,16 +39,13 @@ Gracias por elegirnos. ¡Que su tiempo aquí sea más que una estancia, una expe
 
 - Por normas del edificio, **solo pueden ingresar las personas registradas previamente** y que porten su **documento de identidad**.
 - El edificio cuenta con **lobby** y **ascensor**. Su suite está en el **piso {{floor}}**.
-- La suite tiene **cerradura inteligente**: presione **\*** y luego el **código de 6 dígitos** que le enviaremos con anticipación.
-
-> [!NOTA]
-> Por seguridad, el código de acceso no se publica en esta guía: lo recibirá por mensaje antes de su llegada.
+- Le enviaremos la **información para ingresar** a la suite por mensaje, **antes de su llegada**.
 
 ### Salida: hasta las {{checkout}}
 
-Asegúrese de dejar el departamento antes de las **12:00 del mediodía**. Esto nos permite preparar el espacio para los próximos huéspedes. Simplemente cierre la puerta al salir.
-
-Antes de irse, revise la lista de [Antes de irse](#antes-de-irse).
+- Deje el departamento antes de las **12:00 del mediodía**: así podemos preparar el espacio para los próximos huéspedes.
+- Simplemente **cierre la puerta** al salir.
+- Antes de irse, revise la lista de [Antes de irse](#antes-de-irse).
 
 ## Estacionamiento {#estacionamiento}
 
