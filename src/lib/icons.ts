@@ -129,6 +129,7 @@ export const sectionIcons: Record<string, IconName> = {
   'antes-de-irse': 'log-out',
   alrededores: 'map-pin',
   contacto: 'message',
+  airbnb: 'star',
 };
 
 /** Icono por categoría de lugar. */

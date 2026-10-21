@@ -159,3 +159,7 @@ Cochabamba es conocida como la capital gastronómica de Bolivia. No deje de prob
 ### Contactos de emergencia
 
 {{emergency}}
+
+## Airbnb {#airbnb}
+
+{{airbnb}}

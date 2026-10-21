@@ -26,6 +26,17 @@ site:
     phone: "+59165754543"
     display: "6575 4543"
 
+  # Anuncios de Airbnb (enlaces confirmados por el propietario). Una entrada por suite.
+  airbnb:
+    # Reconocimiento de la anfitriona en Airbnb (se muestra en la tarjeta de Airbnb de cada guía).
+    superhost:
+      es: Claudia es Superanfitriona en Airbnb
+      en: Claudia is an Airbnb Superhost
+    home: https://www.airbnb.com.bo/p/platinumsuites
+    suites:
+      tunari: https://airbnb.com.bo/h/suite-tunari
+      concordia: https://airbnb.com.bo/h/suite-concordia
+
   # Publicación autorizada por el propietario. El QR está en
   # src/content/images/common/wifi/ (reemplace el archivo para cambiarlo).
   wifi:

@@ -66,6 +66,10 @@ export const en: UiDictionary = {
   'contact.whatsappText': 'Hello, we are guests at {suite}.',
   'contact.emergency': 'Emergency contacts',
 
+  'airbnb.title': 'Airbnb',
+  'airbnb.suite': 'View {suite} on Airbnb',
+  'airbnb.home': 'See all our listings',
+
   'places.recommended': 'Host’s pick',
   'places.order': 'Order',
   'places.mapTitle': 'Map of places near Platinum Suites',

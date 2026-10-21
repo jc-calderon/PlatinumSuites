@@ -54,6 +54,8 @@ const guides = defineCollection({
           spot: z.number().int().positive(),
           position: z.string(),
         }),
+        /** Reconocimientos del anuncio de Airbnb (opcional), uno por línea. Se muestran en la tarjeta de Airbnb. */
+        airbnbHighlights: z.array(z.string()).optional(),
         /** Portada opcional. Si se omite, se usa la primera foto de images/<suite>/portada/. */
         cover: image().optional(),
         coverAlt: z.string().optional(),
@@ -120,6 +122,13 @@ const settings = defineCollection({
       names: z.string(),
       phone,
       display: z.string(),
+    }),
+    airbnb: z.object({
+      /** Insignia de la anfitriona (opcional). */
+      superhost: localized.optional(),
+      home: z.url(),
+      /** Un enlace por suite: si se añade una suite en i18n/config.ts, el build exige su enlace aquí. */
+      suites: z.record(suiteEnum, z.url()),
     }),
     wifi: z.object({
       ssid: z.string(),

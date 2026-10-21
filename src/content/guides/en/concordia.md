@@ -21,12 +21,12 @@ Enjoy a luxurious apartment designed for comfort and style, with modern decor an
 
 ### Living room
 
-- **65"** 4K Smart TV (Pluto TV, Netflix and Prime Video).
+- **65"** 4K Smart TV (Entel TV, Netflix, Prime Video and Pluto TV).
 - Elegant and comfortable, with a **sofa bed** to relax on or for a third guest.
 
 ### Master bedroom
 
-- **55"** 4K Smart TV.
+- **55"** 4K Smart TV (Netflix, Prime Video and Pluto TV).
 - **Queen-size** bed with premium bedding and a spacious closet.
 
 ### Kitchen, bathroom and more
@@ -39,5 +39,15 @@ Enjoy a luxurious apartment designed for comfort and style, with modern decor an
 
 The TVs are **4K Smart TVs**. Please use the **Invitado-Guest** profile.
 
-- Available platforms: **Netflix, Max, Disney+, Prime Video and Pluto TV**.
+- Available platforms: **Entel TV, Netflix, Prime Video and Pluto TV**.
 - **Pluto TV** offers more than 190 online TV channels.
+
+### Entel TV: 101 channels and HBO Premium {+}
+
+Entel TV is live cable TV. It is only available on the **living room** TV, through the **TV box**, which has its **own remote control**, separate from the TV remote.
+
+1. On the living room TV, switch the input (Input / Source) to the TV box **HDMI**.
+2. With the TV box remote, open the **Entel TV App** (no login needed).
+3. Browse the channels with that same remote.
+
+To go back to Netflix, Prime Video or other apps, switch the TV back to its usual input.

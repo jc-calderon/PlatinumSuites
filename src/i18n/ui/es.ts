@@ -64,6 +64,10 @@ export const es = {
   'contact.whatsappText': 'Hola, somos huéspedes de {suite}.',
   'contact.emergency': 'Contactos de emergencia',
 
+  'airbnb.title': 'Airbnb',
+  'airbnb.suite': 'Ver {suite} en Airbnb',
+  'airbnb.home': 'Ver todos los alojamientos',
+
   'places.recommended': 'Recomendado por el anfitrión',
   'places.order': 'Pida',
   'places.mapTitle': 'Mapa de lugares cercanos a Platinum Suites',

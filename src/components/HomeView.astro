@@ -7,8 +7,9 @@ import Placeholder from './Placeholder.astro';
 import SuiteFacts from './SuiteFacts.astro';
 import Icon from './Icon.astro';
 import ContactCard from './widgets/ContactCard.astro';
+import AirbnbLinks from './widgets/AirbnbLinks.astro';
 import { localeList, suiteIds, type Locale } from '../i18n/config';
-import { useTranslations } from '../i18n';
+import { pick, useTranslations } from '../i18n';
 import { firstImage } from '../lib/images';
 import { getSettings, getSuiteGuide } from '../lib/content';
 import { guidePath, homePath } from '../lib/routes';
@@ -96,6 +97,7 @@ const alternates = Object.fromEntries(localeList.map((code) => [code, homePath(c
         {t('action.directions')} · {settings.building.name}
         <Icon name="arrow-up-right" size={14} />
       </a>
+      <AirbnbLinks homeUrl={settings.airbnb.home} superhost={pick(settings.airbnb.superhost, lang)} t={t} />
       <div class="help-card">
         <h2 class="help-title">{t('home.help')}</h2>
         <p class="muted">{t('home.helpText')}</p>

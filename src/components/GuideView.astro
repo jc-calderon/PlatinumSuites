@@ -17,6 +17,7 @@ import Gallery from './widgets/Gallery.astro';
 import NearbyMap from './widgets/NearbyMap.astro';
 import PlaceCards from './widgets/PlaceCards.astro';
 import ContactCard from './widgets/ContactCard.astro';
+import AirbnbLinks from './widgets/AirbnbLinks.astro';
 import EmergencyList from './widgets/EmergencyList.astro';
 import { defaultLocale, localeList, locales, type Locale, type SuiteId } from '../i18n/config';
 import { pick, useTranslations } from '../i18n';
@@ -175,6 +176,15 @@ const whatsapp = `https://wa.me/${settings.hosts.phone.replace(/\D/g, '')}?text=
         phone={settings.hosts.phone}
         display={settings.hosts.display}
         suiteName={s.name}
+        t={t}
+      />
+      <AirbnbLinks
+        slot="airbnb"
+        suiteName={s.name}
+        suiteUrl={settings.airbnb.suites[suite]}
+        homeUrl={settings.airbnb.home}
+        highlights={s.airbnbHighlights}
+        superhost={pick(settings.airbnb.superhost, lang)}
         t={t}
       />
       <EmergencyList slot="emergency" items={settings.emergency} lang={lang} />

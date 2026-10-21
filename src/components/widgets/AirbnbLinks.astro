@@ -1,0 +1,50 @@
+---
+import Icon from '../Icon.astro';
+import type { Translator } from '../../i18n';
+
+interface Props {
+  /** Nombre de la suite, para el texto del enlace principal. Omitir en la portada. */
+  suiteName?: string;
+  /** Anuncio de la suite en Airbnb. Omitir en la portada. */
+  suiteUrl?: string;
+  /** Página con todos los alojamientos de Platinum Suites. */
+  homeUrl: string;
+  /** Reconocimientos del anuncio (5 estrellas, favorito entre huéspedes...). */
+  highlights?: string[];
+  /** Insignia de la anfitriona, por ejemplo «Superanfitriona». */
+  superhost?: string;
+  t: Translator;
+}
+
+const { suiteName, suiteUrl, homeUrl, highlights = [], superhost, t } = Astro.props;
+const badges = [...highlights, ...(superhost ? [superhost] : [])];
+---
+
+<div class="contact-card airbnb-card">
+  {
+    badges.length > 0 && (
+      <div class="airbnb-badges">
+        {badges.map((text) => (
+          <span class="airbnb-badge">
+            <Icon name="star" size={16} />
+            {text}
+          </span>
+        ))}
+      </div>
+    )
+  }
+  <div class="contact-actions">
+    {
+      suiteUrl && suiteName && (
+        <a class="btn btn-ghost" href={suiteUrl} target="_blank" rel="noopener noreferrer">
+          {t('airbnb.suite', { suite: suiteName })}
+          <Icon name="arrow-up-right" size={16} />
+        </a>
+      )
+    }
+    <a class="btn btn-ghost" href={homeUrl} target="_blank" rel="noopener noreferrer">
+      {t('airbnb.home')}
+      <Icon name="arrow-up-right" size={16} />
+    </a>
+  </div>
+</div>

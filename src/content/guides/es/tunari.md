@@ -14,6 +14,10 @@ size: "≈ 90 m²"
 parking:
   spot: 17
   position: al costado de la rampa
+airbnbHighlights:
+  - 5 estrellas en Airbnb
+  - Favorito entre huéspedes
+  - Entre el 10 % de los alojamientos mejor valorados
 translation: original
 ---
 
@@ -21,12 +25,12 @@ Disfrute de un departamento de lujo diseñado para ofrecerle comodidad y estilo:
 
 ### Sala de estar
 
-- TV Smart 4K de **75"** (Pluto TV, Netflix y Prime Video).
+- TV Smart 4K de **75"** (Entel TV, Prime Video y Pluto TV).
 - Espaciosa y elegante, con un amplio sofá para relajarse.
 
 ### Suite principal
 
-- TV Smart 4K de **55"** (Pluto TV, Netflix y Prime Video).
+- TV Smart 4K de **55"** (Prime Video y Pluto TV).
 - Cama **queen** (2½ plazas) con ropa de cama premium y amplio clóset.
 - Baño privado con ducha tipo lluvia, toallas suaves, artículos de tocador y secador de pelo.
 
@@ -46,6 +50,15 @@ Disfrute de un departamento de lujo diseñado para ofrecerle comodidad y estilo:
 
 Los televisores son **Smart 4K**. Utilice el perfil **Invitado-Guest**.
 
-- Plataformas disponibles: **Netflix, Max, Disney+, Prime Video y Pluto TV**.
+- Plataformas disponibles: **Entel TV, Prime Video y Pluto TV**.
 - **Pluto TV** ofrece más de 190 canales de TV en línea.
-  - test
+
+### Entel TV: 101 canales y HBO Premium {+}
+
+Entel TV es televisión por cable en vivo. Solo se ve en el televisor de la **sala de estar**, a través del **TV box**, que tiene su **propio control remoto**, distinto del control del televisor.
+
+1. En el televisor de la sala, cambie la entrada (Input / Fuente) a la **HDMI** del TV box.
+2. Con el control del TV box, abra la aplicación **Entel TV App** (no necesita iniciar sesión).
+3. Navegue los canales con ese mismo control.
+
+Para volver a Prime Video u otras aplicaciones, regrese la entrada del televisor a la de siempre.

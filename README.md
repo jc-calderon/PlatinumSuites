@@ -92,10 +92,10 @@ src/
 
 | Archivo                             | Contenido                                                                                                                                                       |
 | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `guides/<idioma>/common.md`         | Todo lo que es **igual** en ambas suites: bienvenida, llegada y salida, estacionamiento, Wi-Fi, TV, cocina, piscina, reglas, basura, antes de irse, alrededores, contacto. **Se edita una vez y cambia en las dos guías.** |
+| `guides/<idioma>/common.md`         | Todo lo que es **igual** en ambas suites: bienvenida, llegada y salida, estacionamiento, Wi-Fi, TV, cocina, piscina, reglas, basura, antes de irse, alrededores, contacto, Airbnb. **Se edita una vez y cambia en las dos guías.** |
 | `guides/<idioma>/tunari.md`         | Solo lo de Suite Tunari: nombre, lema, descripción, piso, capacidad, espacio de parqueo y distribución (habitaciones, camas, TV, baños).                       |
 | `guides/<idioma>/concordia.md`      | Lo mismo para Suite Concordia.                                                                                                                                  |
-| `settings/site.yaml`                | Wi-Fi (red y contraseña), horarios de ingreso y salida, anfitriones y WhatsApp, números de emergencia, enlace del edificio y mapa de My Maps.                   |
+| `settings/site.yaml`                | Wi-Fi (red y contraseña), horarios de ingreso y salida, anfitriones y WhatsApp, enlaces de Airbnb (`airbnb.home` y uno por suite en `airbnb.suites`), números de emergencia, enlace del edificio y mapa de My Maps.                   |
 | `places/places.yaml`                | Lugares: cerca del edificio, recomendados del anfitrión y qué visitar. **El orden del archivo es el orden en pantalla.**                                        |
 
 ### Datos de cada suite (encabezado del archivo)
@@ -116,6 +116,8 @@ size: "≈ 90 m²"          # opcional
 parking:
   spot: 17               # número
   position: al costado de la rampa
+airbnbHighlights:       # opcional: reconocimientos del anuncio de Airbnb, uno por línea
+  - Favorito entre huéspedes
 translation: original    # original | unreviewed | reviewed
 ---
 ```
@@ -136,7 +138,7 @@ Si un dato falta o tiene el formato equivocado (por ejemplo `floor: trece`), la 
 | `**negrita**`, `*cursiva*`, listas, enlaces | Formato normal de Markdown                                                     |
 | `![texto](../../images/common/foto.jpg)`   | Imagen local (optimizada automáticamente)                                      |
 
-Los `id` de sección que usan la navegación inferior y los iconos son: `bienvenida`, `suite`, `llegada`, `estacionamiento`, `wifi`, `tv`, `cocina`, `piscina`, `reglas`, `basura`, `antes-de-irse`, `alrededores`, `contacto`. Puede añadir secciones nuevas con cualquier `{#id}`: aparecen solas en el índice, con un icono genérico.
+Los `id` de sección que usan la navegación inferior y los iconos son: `bienvenida`, `suite`, `llegada`, `estacionamiento`, `wifi`, `tv`, `cocina`, `piscina`, `reglas`, `basura`, `antes-de-irse`, `alrededores`, `contacto`, `airbnb`. Puede añadir secciones nuevas con cualquier `{#id}`: aparecen solas en el índice, con un icono genérico.
 
 **Seguridad:** el Markdown solo controla texto y formato. Se eliminan automáticamente `<script>`, `<iframe>`, `<style>`, formularios, atributos `on…` y enlaces `javascript:`.
 
@@ -161,6 +163,7 @@ Ejemplo: `Su espacio es el **Nº {{parking.spot}}**` → «Su espacio es el **N�
 | `{{places-eat}}`   | Recomendados del anfitrión                                     |
 | `{{places-visit}}` | Qué visitar (en la ciudad y escapadas)                         |
 | `{{contacts}}`     | Tarjeta de anfitriones con WhatsApp y llamada                  |
+| `{{airbnb}}`       | Tarjeta de Airbnb: enlace al anuncio de la suite, a todos los alojamientos y reconocimientos. La portada muestra la insignia de Superanfitriona y «todos los alojamientos» |
 | `{{emergency}}`    | Números de emergencia (tocar para llamar)                      |
 | `{{directions}}`   | Enlace «Cómo llegar» al edificio (puede ir dentro de una frase) |
 

@@ -1475,6 +1475,38 @@ p {
   gap: 0.5rem;
 }
 
+/* Enlace al anuncio de la suite en Airbnb, bajo la tarjeta de anfitriones. */
+.airbnb-card {
+  margin-top: 1rem;
+}
+
+.airbnb-card .contact-actions {
+  grid-template-columns: 1fr;
+}
+
+/* En la portada, .home-extra ya separa los bloques. */
+.home-extra .airbnb-card {
+  margin-top: 0;
+}
+
+.airbnb-badges {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.airbnb-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.airbnb-badge svg {
+  flex: none;
+  color: var(--gold);
+}
+
 .emergency-list {
   display: grid;
   gap: 0.5rem;

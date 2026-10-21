@@ -153,3 +153,7 @@ Cochabamba is known as Bolivia's culinary capital. Be sure to try **silpancho**,
 ### Emergency contacts
 
 {{emergency}}
+
+## Airbnb {#airbnb}
+
+{{airbnb}}
